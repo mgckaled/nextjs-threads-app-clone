@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
 import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -11,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
+import { updateUser } from "@/lib/actions/user.actions"
 import { useUploadThing } from "@/lib/uploadthing"
 import { isBase64Image } from "@/lib/utils"
 import { UserValidation } from "@/lib/validations/user"
@@ -28,6 +30,8 @@ interface Props {
 }
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
+  const router = useRouter()
+  const pathname = usePathname()
   const { startUpload } = useUploadThing("media")
 
   const [files, setFiles] = useState<File[]>([])
@@ -53,6 +57,21 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         values.profile_photo = imgRes[0].url
       }
     }
+
+     await updateUser({
+       name: values.name,
+       path: pathname,
+       username: values.username,
+       userId: user.id,
+       bio: values.bio,
+       image: values.profile_photo,
+     })
+
+     if (pathname === "/profile/edit") {
+       router.back()
+     } else {
+       router.push("/")
+     }
   }
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
