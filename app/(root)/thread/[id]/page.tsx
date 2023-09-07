@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 
 import ThreadCard from "@/components/cards/ThreadCard"
+import Comment from "@/components/forms/Comment"
 
 import { fetchThreadById } from "@/lib/actions/thread.actions"
 import { fetchUser } from "@/lib/actions/user.actions"
@@ -35,6 +36,7 @@ async function page({ params }: { params: { id: string } }) {
       </div>
 
       <div className='mt-7'>
+        <Comment threadId={params.id} currentUserImg={user.imageUrl} currentUserId={JSON.stringify(userInfo._id)} />
       </div>
 
       <div className='mt-10'>
