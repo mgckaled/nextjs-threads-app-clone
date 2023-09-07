@@ -25,7 +25,7 @@ function Searchbar({ routeType }: Props) {
     }, 300)
 
     return () => clearTimeout(delayDebounceFn)
-  }, [search, routeType, router])
+  }, [search, routeType])
 
   return (
     <div className='searchbar'>
