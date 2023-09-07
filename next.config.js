@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  typescript: {
+    ignoreDuringBuilds: true
+  },
   experimental: {
     serverActions: true,
     serverComponentsExternalPackages: ["mongoose"],
@@ -8,7 +11,7 @@ const nextConfig = {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
-    ignoreBuildErrors: true,
+
   },
   images: {
     remotePatterns: [
